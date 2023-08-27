@@ -1,18 +1,20 @@
 import 'package:flutter/material.dart';
+import 'package:todoey_flutter/widgets/tasks_list.dart';
 
 class AddTaskScreen extends StatelessWidget {
-  const AddTaskScreen({super.key});
-
+  AddTaskScreen(this.addTaskCallback);
+  final Function addTaskCallback;
   @override
   Widget build(BuildContext context) {
+    String? newTaskTitle;
     return Container(
-      color: const Color(0xff757575),
+      color: Color(0xff757575),
       child: Container(
-        padding: const EdgeInsets.symmetric(
+        padding: EdgeInsets.symmetric(
           horizontal: 40.0,
           vertical: 20.0,
         ),
-        decoration: const BoxDecoration(
+        decoration: BoxDecoration(
           color: Colors.white,
           borderRadius: BorderRadius.only(
             topLeft: Radius.circular(20.0),
@@ -22,7 +24,7 @@ class AddTaskScreen extends StatelessWidget {
         child: Column(
           crossAxisAlignment: CrossAxisAlignment.stretch,
           children: [
-            const Text(
+            Text(
               'Add Task',
               textAlign: TextAlign.center,
               style: TextStyle(
@@ -31,10 +33,12 @@ class AddTaskScreen extends StatelessWidget {
                 fontWeight: FontWeight.w600,
               ),
             ),
-            const TextField(
-              autofocus: true,
-              textAlign: TextAlign.center,
-            ),
+            TextField(
+                autofocus: true,
+                textAlign: TextAlign.center,
+                onChanged: (newText) {
+                  newTaskTitle = newText;
+                }),
             const SizedBox(
               height: 10.0,
             ),
@@ -48,7 +52,8 @@ class AddTaskScreen extends StatelessWidget {
                     MaterialStatePropertyAll(Colors.lightBlueAccent),
               ),
               onPressed: () {
-                //  Add task to list
+                addTaskCallback(newTaskTitle);
+                Navigator.pop(context);
               },
             )
           ],
